@@ -1,78 +1,64 @@
 Data Science Advance Project
 # Chatbot Development
 
-## Project Overview
-This project builds a Fake News Detection System trained on a dataset containing real and fake news articles. It uses TF-IDF vectorization and a Logistic Regression or Naive Bayes classifier to analyze the textual patterns of news content. The system is deployed with Streamlit for easy interaction — users can enter a news statement and instantly see if it’s fake or real, along with a confidence score.
+A lightweight, fully local AI chatbot built using Python, Streamlit, and Ollama. This project runs offline on your machine using the Phi3 Mini model (or any Ollama-supported model).
 
-## Key Features
-- Text preprocessing with cleaning, stopword removal, and lemmatization
-- TF-IDF vectorization for feature extraction
-- Model trained to achieve around 98–99% accuracy
-- Streamlit web interface for real-time predictions
-- Confidence score displayed for each prediction
-- Automatically loads a trained model (or trains one if not found)
+## Features
+- Runs 100% locally (no API keys or internet required)
+- Uses Ollama for efficient local inference
+- Clean Streamlit web interface
+- Easily replaceable model (e.g., llama3.2:1b, mistral, gemma)
 
-## Why Some True Statements Are Flagged as Fake
-Short or overly simple sentences such as "Donald Trump is a president of America" may be predicted as fake because the model was trained mostly on full-length news articles. It assumes "fake" when:
-- The text resembles clickbait or incomplete statements seen in fake samples
-- The statement lacks journalistic context such as sources or structure
-- The model detects political figure mentions that often correlated with fake news in the dataset
+## Prerequisites
+- Python 3.9+
+- 16 GB RAM or higher
+- Ollama installed (https://ollama.com/download)
 
-To improve predictions, provide more context. For example:
-"Donald Trump served as the 45th President of the United States, according to official records."
-This provides linguistic structure and facts, which help the model classify more accurately.
+## Setup
 
-## Tech Stack
-- Python 3
-- Pandas, NumPy
-- NLTK (for stopwords and lemmatization)
-- Scikit-learn (for TF-IDF and model training)
-- Streamlit (for deployment)
-- Joblib (for saving/loading models)
+```bash
+# Clone your project (optional)
+git clone https://github.com/your-username/chatbot-development.git
+cd chatbot-development
 
-## Dataset 
-link : https://www.kaggle.com/datasets/clmentbisaillon/fake-and-real-news-dataset
+# Create a virtual environment
+python -m venv venv
+venv\Scripts\activate   # On Windows
+# source venv/bin/activate   # On Mac/Linux
 
-## Folder Structure
-Fake-News-Detection/
-│
-├── fake_news_detection.ipynb   # Model training and evaluation
-├── app.py                      # Streamlit application
-├── vectorizer.pkl              # Saved TF-IDF vectorizer
-├── model.pkl                   # Saved ML model
-├── true.csv                    # True news dataset
-├── fake.csv                    # Fake news dataset
-└── README.md                   # Project documentation
+# Install dependencies
+pip install streamlit requests
 
-## How to Run
-1. Install dependencies
-   pip install -r requirements.txt
+# Install and run Ollama
+# Download Ollama from https://ollama.com/download
+# Then pull the Phi3 Mini model
+ollama pull phi3:mini
 
-2. Run the Streamlit app
-   streamlit run app.py
+# Start the Ollama server (keep it running)
+ollama serve
 
-3. Interact with the app  
-   Enter any news content and click "Check News" to get:
-   - Real or Fake label
-   - Confidence percentage
+# Run the Chatbot (CLI)
+python chatbot.py
 
-## Model Performance
-Accuracy: 98.8%  
-Precision: 0.99  
-Recall: 0.99  
-F1-score: 0.99  
+# Run the Streamlit Web App
+streamlit run app.py
 
-## Example Predictions
-Input: "The U.S. Senate passed a new infrastructure bill on Tuesday."  
-Output: Real News (Confidence: 97%)
+# Then open your browser at:
+http://localhost:8501
+```
 
-Input: "NASA confirms Earth will go dark for 15 days next month."  
-Output: Fake News (Confidence: 99%)
+## File Structure
+Chatbot Development/
+├── chatbot.py      # Command-line chatbot
+├── app.py          # Streamlit web app
+├── venv/           # Virtual environment
+└── README.md       # Documentation
 
-## Future Improvements
-- Add multiple ML models for comparison
-- Include article source verification
-- Integrate live fact-checking API
+## To run Ollama on CPU, set this before starting:
+```
+set OLLAMA_NUM_GPU=0  # Windows
+export OLLAMA_NUM_GPU=0  # Mac/Linux
+```
 
 ## Contributing
 Contributions are welcome!
